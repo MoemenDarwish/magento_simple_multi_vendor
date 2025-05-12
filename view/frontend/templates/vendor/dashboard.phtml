@@ -1,0 +1,49 @@
+<?php
+/**
+ * @var \Vendor\MultiVendor\Block\Vendor\Dashboard $block
+ */
+$vendor = $block->getVendor();
+?>
+
+<?php if ($vendor): ?>
+    <div class="vendor-dashboard">
+        <div class="page-title-wrapper">
+            <h1 class="page-title"><?= $block->escapeHtml(__('Vendor Dashboard')) ?></h1>
+        </div>
+        
+        <div class="vendor-info">
+            <div class="box box-information">
+                <div class="box-title">
+                    <h2><?= $block->escapeHtml(__('Shop Information')) ?></h2>
+                </div>
+                <div class="box-content">
+                    <p><strong><?= $block->escapeHtml(__('Shop Name')) ?>:</strong> <?= $block->escapeHtml($vendor->getShopName()) ?></p>
+                    <p><strong><?= $block->escapeHtml(__('Shop URL')) ?>:</strong> <?= $block->escapeHtml($vendor->getShopUrl()) ?></p>
+                    <p><strong><?= $block->escapeHtml(__('Status')) ?>:</strong> <?= $block->escapeHtml(ucfirst($vendor->getStatus())) ?></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="actions-toolbar">
+            <div class="primary">
+                <a href="<?= $block->getUrl('multivendor/vendor/products') ?>" class="action primary">
+                    <span><?= $block->escapeHtml(__('My Products')) ?></span>
+                </a>
+                <a href="<?= $block->getUrl('multivendor/vendor/orders') ?>" class="action primary">
+                    <span><?= $block->escapeHtml(__('My Orders')) ?></span>
+                </a>
+            </div>
+        </div>
+    </div>
+<?php else: ?>
+    <div class="message info empty">
+        <span><?= $block->escapeHtml(__('You are not registered as a vendor or your account is not approved yet.')) ?></span>
+    </div>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <a href="<?= $block->getUrl('multivendor/vendor/register') ?>" class="action primary">
+                <span><?= $block->escapeHtml(__('Become a Vendor')) ?></span>
+            </a>
+        </div>
+    </div>
+<?php endif; ?> 

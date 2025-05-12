@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="vendor_profile" resource="default" engine="innodb" comment="Vendor Profile Table">
+        <column xsi:type="int" name="vendor_id" unsigned="true" nullable="false" identity="true"
+                comment="Vendor ID"/>
+        <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Vendor Name"/>
+        <column xsi:type="varchar" name="email" nullable="false" length="255" comment="Vendor Email"/>
+        <column xsi:type="varchar" name="shop_name" nullable="false" length="255" comment="Shop Name"/>
+        <column xsi:type="varchar" name="shop_url" nullable="false" length="255" comment="Shop URL"/>
+        <column xsi:type="text" name="description" nullable="true" comment="Vendor Description"/>
+        <column xsi:type="varchar" name="logo" nullable="true" length="255" comment="Vendor Logo Path"/>
+        <column xsi:type="varchar" name="banner" nullable="true" length="255" comment="Vendor Banner Path"/>
+        <column xsi:type="varchar" name="status" nullable="false" length="20" default="pending" comment="Vendor Status"/>
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="false" comment="Customer ID"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="vendor_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="VENDOR_PROFILE_EMAIL">
+            <column name="email"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="VENDOR_PROFILE_SHOP_URL">
+            <column name="shop_url"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="VENDOR_PROFILE_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID"
+                    table="vendor_profile" column="customer_id" referenceTable="customer_entity"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+    </table>
+    <table name="vendor_product" resource="default" engine="innodb" comment="Vendor Product Table">
+        <column xsi:type="int" name="id" unsigned="true" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="int" name="vendor_id" unsigned="true" nullable="false" comment="Vendor ID"/>
+        <column xsi:type="int" name="product_id" unsigned="true" nullable="false" comment="Product ID"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="VENDOR_PRODUCT_VENDOR_ID_VENDOR_PROFILE_VENDOR_ID"
+                    table="vendor_product" column="vendor_id" referenceTable="vendor_profile"
+                    referenceColumn="vendor_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="VENDOR_PRODUCT_PRODUCT_ID_CATALOG_PRODUCT_ENTITY_ENTITY_ID"
+                    table="vendor_product" column="product_id" referenceTable="catalog_product_entity"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="VENDOR_PRODUCT_VENDOR_ID_PRODUCT_ID">
+            <column name="vendor_id"/>
+            <column name="product_id"/>
+        </constraint>
+    </table>
+</schema> 

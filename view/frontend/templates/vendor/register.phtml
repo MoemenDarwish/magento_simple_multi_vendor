@@ -1,0 +1,68 @@
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ */
+?>
+
+<div class="vendor-register">
+    <div class="page-title-wrapper">
+        <h1 class="page-title"><?= $block->escapeHtml(__('Become a Vendor')) ?></h1>
+    </div>
+    
+    <form class="form vendor-register-form" action="<?= $block->getUrl('multivendor/vendor/save') ?>" method="post" id="vendor-register-form" data-mage-init='{"validation":{}}'>
+        <?= $block->getBlockHtml('formkey') ?>
+        
+        <fieldset class="fieldset">
+            <legend class="legend"><span><?= $block->escapeHtml(__('Shop Information')) ?></span></legend>
+            
+            <div class="field name required">
+                <label class="label" for="name"><span><?= $block->escapeHtml(__('Your Name')) ?></span></label>
+                <div class="control">
+                    <input type="text" name="name" id="name" value="" title="<?= $block->escapeHtmlAttr(__('Your Name')) ?>" class="input-text" data-validate="{required:true}">
+                </div>
+            </div>
+            
+            <div class="field email required">
+                <label class="label" for="email"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
+                <div class="control">
+                    <input type="email" name="email" id="email" value="" title="<?= $block->escapeHtmlAttr(__('Email')) ?>" class="input-text" data-validate="{required:true, 'validate-email':true}">
+                </div>
+            </div>
+            
+            <div class="field shop_name required">
+                <label class="label" for="shop_name"><span><?= $block->escapeHtml(__('Shop Name')) ?></span></label>
+                <div class="control">
+                    <input type="text" name="shop_name" id="shop_name" value="" title="<?= $block->escapeHtmlAttr(__('Shop Name')) ?>" class="input-text" data-validate="{required:true}">
+                </div>
+            </div>
+            
+            <div class="field shop_url required">
+                <label class="label" for="shop_url"><span><?= $block->escapeHtml(__('Shop URL')) ?></span></label>
+                <div class="control">
+                    <input type="text" name="shop_url" id="shop_url" value="" title="<?= $block->escapeHtmlAttr(__('Shop URL')) ?>" class="input-text" data-validate="{required:true}">
+                    <div class="note"><span><?= $block->escapeHtml(__('This will be used in your shop URL')) ?></span></div>
+                </div>
+            </div>
+            
+            <div class="field description">
+                <label class="label" for="description"><span><?= $block->escapeHtml(__('Shop Description')) ?></span></label>
+                <div class="control">
+                    <textarea name="description" id="description" title="<?= $block->escapeHtmlAttr(__('Shop Description')) ?>" class="input-text" rows="5"></textarea>
+                </div>
+            </div>
+        </fieldset>
+        
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button type="submit" class="action submit primary" title="<?= $block->escapeHtmlAttr(__('Submit')) ?>">
+                    <span><?= $block->escapeHtml(__('Submit')) ?></span>
+                </button>
+            </div>
+            <div class="secondary">
+                <a class="action back" href="<?= $block->getUrl('customer/account') ?>">
+                    <span><?= $block->escapeHtml(__('Back')) ?></span>
+                </a>
+            </div>
+        </div>
+    </form>
+</div> 

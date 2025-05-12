@@ -1,0 +1,93 @@
+<?php
+/**
+ * @var \Vendor\MultiVendor\Block\Vendor\Order\ListOrder $block
+ */
+$orders = $block->getVendorOrders();
+?>
+
+<div class="vendor-orders">
+    <div class="page-title-wrapper">
+        <h1 class="page-title"><?= $block->escapeHtml(__('My Orders')) ?></h1>
+    </div>
+    
+    <?php if (count($orders)): ?>
+        <div class="table-wrapper orders-history">
+            <table class="data table table-order-items history" id="my-orders-table">
+                <caption class="table-caption"><?= $block->escapeHtml(__('Orders')) ?></caption>
+                <thead>
+                    <tr>
+                        <th scope="col" class="col id"><?= $block->escapeHtml(__('Order #')) ?></th>
+                        <th scope="col" class="col date"><?= $block->escapeHtml(__('Date')) ?></th>
+                        <th scope="col" class="col customer"><?= $block->escapeHtml(__('Customer')) ?></th>
+                        <th scope="col" class="col total"><?= $block->escapeHtml(__('Order Total')) ?></th>
+                        <th scope="col" class="col status"><?= $block->escapeHtml(__('Status')) ?></th>
+                        <th scope="col" class="col actions"><?= $block->escapeHtml(__('Actions')) ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($orders as $order): ?>
+                        <tr>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Order #')) ?>" class="col id"><?= $block->escapeHtml($order->getIncrementId()) ?></td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Date')) ?>" class="col date"><?= $block->escapeHtml($block->formatDate($order->getCreatedAt())) ?></td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Customer')) ?>" class="col customer"><?= $block->escapeHtml($order->getCustomerFirstname() . ' ' . $order->getCustomerLastname()) ?></td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Order Total')) ?>" class="col total"><?= $block->escapeHtml($order->getGrandTotal()) ?></td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Status')) ?>" class="col status"><?= $block->escapeHtml($order->getStatusLabel()) ?></td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Actions')) ?>" class="col actions">
+                                <a href="#" class="action view" data-order-id="<?= $block->escapeHtmlAttr($order->getId()) ?>">
+                                    <span><?= $block->escapeHtml(__('View')) ?></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr class="order-items" id="order-items-<?= $block->escapeHtmlAttr($order->getId()) ?>" style="display: none;">
+                            <td colspan="6">
+                                <table class="data table table-order-items">
+                                    <thead>
+                                        <tr>
+                                            <th><?= $block->escapeHtml(__('Product Name')) ?></th>
+                                            <th><?= $block->escapeHtml(__('SKU')) ?></th>
+                                            <th><?= $block->escapeHtml(__('Price')) ?></th>
+                                            <th><?= $block->escapeHtml(__('Qty')) ?></th>
+                                            <th><?= $block->escapeHtml(__('Subtotal')) ?></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($block->getVendorItemsInOrder($order) as $item): ?>
+                                            <tr>
+                                                <td><?= $block->escapeHtml($item->getName()) ?></td>
+                                                <td><?= $block->escapeHtml($item->getSku()) ?></td>
+                                                <td><?= $block->escapeHtml($item->getPrice()) ?></td>
+                                                <td><?= $block->escapeHtml($item->getQtyOrdered()) ?></td>
+                                                <td><?= $block->escapeHtml($item->getRowTotal()) ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        <script type="text/javascript">
+            require(['jquery'], function($) {
+                $('.action.view').on('click', function(e) {
+                    e.preventDefault();
+                    var orderId = $(this).data('order-id');
+                    $('#order-items-' + orderId).toggle();
+                });
+            });
+        </script>
+    <?php else: ?>
+        <div class="message info empty">
+            <span><?= $block->escapeHtml(__('You have no orders yet.')) ?></span>
+        </div>
+    <?php endif; ?>
+    
+    <div class="actions-toolbar">
+        <div class="secondary">
+            <a href="<?= $block->getUrl('multivendor/vendor/dashboard') ?>" class="action back">
+                <span><?= $block->escapeHtml(__('Back to Dashboard')) ?></span>
+            </a>
+        </div>
+    </div>
+</div> 

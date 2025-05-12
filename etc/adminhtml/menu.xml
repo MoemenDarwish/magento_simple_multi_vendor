@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Vendor_MultiVendor::multivendor" title="Multi Vendor" module="Vendor_MultiVendor" sortOrder="50" resource="Vendor_MultiVendor::multivendor"/>
+        <add id="Vendor_MultiVendor::vendors" title="Vendors" module="Vendor_MultiVendor" sortOrder="10" parent="Vendor_MultiVendor::multivendor" action="multivendor/vendor/index" resource="Vendor_MultiVendor::vendors"/>
+    </menu>
+</config> 

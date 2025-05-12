@@ -1,0 +1,56 @@
+<?php
+/**
+ * @var \Vendor\MultiVendor\Block\Vendor\Product\ListProduct $block
+ */
+$products = $block->getVendorProducts();
+?>
+
+<div class="vendor-products">
+    <div class="page-title-wrapper">
+        <h1 class="page-title"><?= $block->escapeHtml(__('My Products')) ?></h1>
+    </div>
+    
+    <?php if (count($products)): ?>
+        <div class="table-wrapper orders-history">
+            <table class="data table table-order-items history" id="my-products-table">
+                <caption class="table-caption"><?= $block->escapeHtml(__('Products')) ?></caption>
+                <thead>
+                    <tr>
+                        <th scope="col" class="col image"><?= $block->escapeHtml(__('Image')) ?></th>
+                        <th scope="col" class="col id"><?= $block->escapeHtml(__('ID')) ?></th>
+                        <th scope="col" class="col name"><?= $block->escapeHtml(__('Name')) ?></th>
+                        <th scope="col" class="col sku"><?= $block->escapeHtml(__('SKU')) ?></th>
+                        <th scope="col" class="col price"><?= $block->escapeHtml(__('Price')) ?></th>
+                        <th scope="col" class="col status"><?= $block->escapeHtml(__('Status')) ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($products as $product): ?>
+                        <tr>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Image')) ?>" class="col image">
+                                <img src="<?= $block->escapeUrl($block->getProductImage($product)) ?>" alt="<?= $block->escapeHtmlAttr($product->getName()) ?>" width="60" />
+                            </td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('ID')) ?>" class="col id"><?= $block->escapeHtml($product->getId()) ?></td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Name')) ?>" class="col name"><?= $block->escapeHtml($product->getName()) ?></td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('SKU')) ?>" class="col sku"><?= $block->escapeHtml($product->getSku()) ?></td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Price')) ?>" class="col price"><?= $block->escapeHtml($product->getFinalPrice()) ?></td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Status')) ?>" class="col status"><?= $block->escapeHtml($product->getStatus() == 1 ? __('Enabled') : __('Disabled')) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php else: ?>
+        <div class="message info empty">
+            <span><?= $block->escapeHtml(__('You have not added any products yet.')) ?></span>
+        </div>
+    <?php endif; ?>
+    
+    <div class="actions-toolbar">
+        <div class="secondary">
+            <a href="<?= $block->getUrl('multivendor/vendor/dashboard') ?>" class="action back">
+                <span><?= $block->escapeHtml(__('Back to Dashboard')) ?></span>
+            </a>
+        </div>
+    </div>
+</div> 
