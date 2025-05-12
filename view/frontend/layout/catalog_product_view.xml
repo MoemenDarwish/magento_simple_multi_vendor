@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Vendor\MultiVendor\Block\Product\VendorSelection"
+                   name="vendor.selection"
+                   template="Vendor_MultiVendor::product/vendor_selection.phtml"
+                   after="product.info.main">
+                <arguments>
+                    <argument name="product" xsi:type="object">Magento\Catalog\Block\Product\View</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page> 

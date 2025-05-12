@@ -5,12 +5,12 @@ This document summarizes the implementation of a custom multi-vendor module for 
 
 ## Module Structure
 ```
-app/code/Vendor/MultiVendor/
 ├── Block/
 │   ├── Vendor/
 │   │   ├── Dashboard.php
 │   │   ├── Product/
-│   │   │   └── ListProduct.php
+│   │   │   ├── ListProduct.php
+│   │   │   └── VendorSelection.php
 │   │   └── Order/
 │   │       └── ListOrder.php
 ├── Controller/
@@ -20,6 +20,8 @@ app/code/Vendor/MultiVendor/
 │   │   ├── Save.php
 │   │   ├── Products.php
 │   │   └── Orders.php
+│   └── Cart/
+│       └── Add.php
 ├── Helper/
 │   └── Data.php
 ├── Model/
@@ -48,15 +50,20 @@ app/code/Vendor/MultiVendor/
 │       │   ├── multivendor_vendor_dashboard.xml
 │       │   ├── multivendor_vendor_register.xml
 │       │   ├── multivendor_vendor_products.xml
-│       │   └── multivendor_vendor_orders.xml
-│       └── templates/
-│           └── vendor/
-│               ├── dashboard.phtml
-│               ├── register.phtml
-│               ├── product/
-│               │   └── list.phtml
-│               └── order/
-│                   └── list.phtml
+│       │   ├── multivendor_vendor_orders.xml
+│       │   └── catalog_product_view.xml
+│       ├── templates/
+│       │   └── vendor/
+│       │       ├── dashboard.phtml
+│       │       ├── register.phtml
+│       │       ├── product/
+│       │       │   ├── list.phtml
+│       │       │   └── vendor_selection.phtml
+│       │       └── order/
+│       │           └── list.phtml
+│       └── web/
+│           └── js/
+│               └── vendor-selection.js
 └── registration.php
 ```
 
@@ -77,6 +84,7 @@ app/code/Vendor/MultiVendor/
    - `id`: Primary key
    - `vendor_id`: Foreign key to vendor_profile
    - `product_id`: Foreign key to catalog_product_entity
+   - `price`: Vendor's price for the product
    - `created_at`: Creation timestamp
 
 ### Frontend Functionality
@@ -98,6 +106,13 @@ app/code/Vendor/MultiVendor/
    - Order details including customer, date, and status
    - Expandable order items view showing only the vendor's products in each order
 
+5. **Multi-Vendor Product Selection**:
+   - Shows all vendors selling the same product on the product page
+   - Displays vendor name, shop name, and price for each vendor
+   - Allows customers to select their preferred vendor
+   - Adds product to cart with selected vendor information
+   - Updates mini cart automatically
+
 ### Admin Functionality
 1. **Admin Menu**:
    - Multi Vendor menu item in the admin panel
@@ -107,7 +122,7 @@ app/code/Vendor/MultiVendor/
    - ACL rules for controlling admin access to vendor management
 
 ## Installation Instructions
-1. Place the module files in the `app/code/Vendor/MultiVendor/` directory
+1. Place the module files in your Magento installation's `app/code/Vendor/MultiVendor/` directory
 2. Run the following commands:
    ```bash
    bin/magento setup:upgrade
@@ -132,5 +147,12 @@ app/code/Vendor/MultiVendor/
    - Vendor views orders containing their products
    - Can expand each order to see only their items
    - Tracks order status and customer information
+
+4. **Customer Product Selection**:
+   - Customer views a product page
+   - Sees all vendors selling the same product
+   - Compares prices and vendor information
+   - Selects preferred vendor
+   - Product is added to cart with selected vendor information
 
 This module provides a complete and extensible foundation for multi-vendor functionality in Magento 2.4.7, with a user-friendly interface for both vendors and administrators. 
